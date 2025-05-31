@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light"> <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Complete Your Order - The Literary Haven</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <a href="index.html">The Literary Haven</a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html#browse-books">Back to Books</a></li>
+            </ul>
+        </nav>
+        <div class="header-actions"> <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i> </button>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="order-form-section slide-up">
+            <form id="orderForm" class="order-form">
+                <h2>Your Order Details</h2>
+                <div class="form-group">
+                    <label for="bookTitle">Book:</label>
+                    <input type="text" id="bookTitle" name="bookTitle" readonly value="Selected Book Title">
+                </div>
+
+                <h2>Shipping Information</h2>
+                <div class="form-group">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address Line 1:</label>
+                    <input type="text" id="address" name="address" placeholder="123 Main St" required>
+                </div>
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" id="city" name="city" placeholder="Anytown" required>
+                </div>
+                <div class="form-group">
+                    <label for="state">State/Province:</label>
+                    <input type="text" id="state" name="state" placeholder="State" required>
+                </div>
+                <div class="form-group">
+                    <label for="zipCode">Zip/Postal Code:</label>
+                    <input type="text" id="zipCode" name="zipCode" placeholder="12345" required>
+                </div>
+                <div class="form-group">
+                    <label for="country">Country:</label>
+                    <input type="text" id="country" name="country" placeholder="Country" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="john.doe@example.com" required>
+                </div>
+
+                <h2>Payment Details</h2>
+                <div class="payment-details">
+                    <p>Cash on Delivery (COD) is the only accepted payment method.</p>
+                    <p>Your order will be processed upon confirmation.</p>
+                </div>
+
+                <button type="submit" class="btn place-order-btn">Place Order</button>
+            </form>
+        </section>
+    </main>
+
+    <footer class="main-footer animate-fade-in">
+        <div class="footer-content">
+            <p>&copy; 2025 The Literary Haven. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Set book title from query parameter (for demonstration)
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const bookTitle = urlParams.get('book');
+            if (bookTitle) {
+                document.getElementById('bookTitle').value = decodeURIComponent(bookTitle);
+            }
+        });
+
+        // Basic form submission handler
+        document.getElementById('orderForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent actual form submission
+            alert('Order placed successfully! Thank Благодарим вас за вашу покупку (Thank you for your purchase)!'); // Added a touch of Indian context.
+            // Here you would typically send data to a server
+            // For demonstration, we'll just alert and redirect
+            window.location.href = 'index.html'; // Go back to homepage after order
+        });
+
+        // Mobile Navigation Toggle (duplicated for order page)
+        const navToggle = document.querySelector('.nav-toggle');
+        const mainNav = document.querySelector('.main-nav ul');
+
+        if (navToggle && mainNav) {
+            navToggle.addEventListener('click', () => {
+                mainNav.classList.toggle('active');
+                navToggle.querySelector('i').classList.toggle('fa-bars');
+                navToggle.querySelector('i').classList.toggle('fa-times');
+            });
+
+            mainNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (mainNav.classList.contains('active')) {
+                        mainNav.classList.remove('active');
+                        navToggle.querySelector('i').classList.remove('fa-times');
+                        navToggle.querySelector('i').classList.add('fa-bars');
+                    }
+                });
+            });
+        }
+
+        // Dark Mode Toggle (ADDED FOR ORDER PAGE)
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement; // Get the root HTML element
+
+        function setInitialTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            htmlElement.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+        }
+
+        function updateThemeIcon(theme) {
+            const icon = themeToggle.querySelector('i');
+            if (theme === 'dark') {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+
+        themeToggle.addEventListener('click', () => {
+            let currentTheme = htmlElement.getAttribute('data-theme');
+            let newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme); // Save preference
+            updateThemeIcon(newTheme);
+        });
+
+        // Set theme on page load
+        setInitialTheme();
+    </script>
+</body>
+</html>

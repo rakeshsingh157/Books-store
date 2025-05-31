@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light"> <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Literary Haven - Discover Your Next Chapter</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <a href="index.html">The Literary Haven</a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#browse-books">Browse Books</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="header-actions">
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i> </button>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="hero-section">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 class="animate-fade-in-up">Unlock Worlds of Stories</h1>
+                <p class="animate-fade-in-up delay-1">Find your next adventure, knowledge, or escape right here.</p>
+                <div class="search-bar animate-fade-in-up delay-2">
+                    <input id="searchInput" type="text" placeholder="Search by title, author, or genre..." aria-label="Search books" />
+                    <button id="searchBtn" aria-label="Search books"><i class="fas fa-search"></i> Search</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="browse-books" class="section-padded">
+            <h2 class="section-title animate-fade-in">Explore Our Collection</h2>
+            <div id="results" class="book-grid" aria-live="polite" aria-atomic="true"></div>
+            <div id="no-results" class="no-results" role="alert" style="display:none;">No books found. Try a different search!</div>
+            <div id="loading" class="loading-spinner" style="display:none;"></div>
+            <button id="loadMoreBtn" class="btn btn-primary load-more-btn animate-fade-in" style="display:none;">Load More Books</button>
+        </section>
+
+        <section id="about" class="section-padded about-section">
+            <div class="about-overlay"></div>
+            <div class="section-content">
+                <h2 class="section-title animate-fade-in-up">About The Literary Haven</h2>
+                <p class="animate-fade-in-up delay-1">We believe in the power of stories to transform, inspire, and connect. The Literary Haven is dedicated to bringing you a curated selection of books, from timeless classics to contemporary bestsellers, all at your fingertips.</p>
+                <p class="animate-fade-in-up delay-2">Our mission is to foster a love for reading and provide a seamless experience for every book enthusiast. Dive in and discover your next great read!</p>
+            </div>
+        </section>
+
+        <section id="contact" class="section-padded">
+            <h2 class="section-title animate-fade-in">Get in Touch</h2>
+            <div class="contact-content">
+                <p class="animate-fade-in-up">Have questions, suggestions, or just want to chat about books? We'd love to hear from you!</p>
+                <div class="contact-details animate-fade-in-up delay-1">
+                    <p><i class="fas fa-envelope"></i> Email: <a href="mailto:info@literaryhaven.com">info@literaryhaven.com</a></p>
+                    <p><i class="fas fa-phone-alt"></i> Phone: +91 98765 43210</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Address: 123 Book Lane, Storyville, India</p>
+                </div>
+                <form class="contact-form animate-fade-in-up delay-2">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea placeholder="Your Message" rows="5" required></textarea>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer animate-fade-in">
+        <div class="footer-content">
+            <p>&copy; 2025 The Literary Haven. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Parallax Effect (for sections with background images)
+        document.addEventListener('scroll', function() {
+            const heroSection = document.querySelector('.hero-section');
+            const aboutSection = document.querySelector('.about-section');
+            let scrollPosition = window.pageYOffset;
+
+            if (heroSection) {
+                heroSection.style.backgroundPositionY = -scrollPosition * 0.2 + 'px';
+            }
+            if (aboutSection) {
+                aboutSection.style.backgroundPositionY = -scrollPosition * 0.15 + 'px'; // Slightly different speed
+            }
+        });
+
+        // Mobile Navigation Toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const mainNav = document.querySelector('.main-nav ul');
+
+        if (navToggle && mainNav) {
+            navToggle.addEventListener('click', () => {
+                mainNav.classList.toggle('active');
+                navToggle.querySelector('i').classList.toggle('fa-bars');
+                navToggle.querySelector('i').classList.toggle('fa-times');
+            });
+
+            // Close mobile nav when a link is clicked
+            mainNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (mainNav.classList.contains('active')) {
+                        mainNav.classList.remove('active');
+                        navToggle.querySelector('i').classList.remove('fa-times');
+                        navToggle.querySelector('i').classList.add('fa-bars');
+                    }
+                });
+            });
+        }
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement; // Get the root HTML element
+
+        function setInitialTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            htmlElement.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+        }
+
+        function updateThemeIcon(theme) {
+            const icon = themeToggle.querySelector('i');
+            if (theme === 'dark') {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+
+        themeToggle.addEventListener('click', () => {
+            let currentTheme = htmlElement.getAttribute('data-theme');
+            let newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme); // Save preference
+            updateThemeIcon(newTheme);
+        });
+
+        // Set theme on page load
+        setInitialTheme();
+    </script>
+</body>
+</html>
